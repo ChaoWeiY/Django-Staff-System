@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">基本資料/修改資料</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" id="id" value="{{ emp.id }}">
+
+                    <div class="form-group">
+                        <label for="gender" class="col-md-4 control-label">性別: </label>
+                        <div class="col-md-8">
+                            <select name="gender">
+                                <option value="1" {% if emp.gender == "1" %} selected {% endif %}> 男</option>
+                                <option value="2" {% if emp.gender == "2" %} selected {% endif %}> 女</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-md-4 control-label">姓名: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="請輸入姓名"
+                                value="{{ emp.name }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="col-md-4 control-label">電話: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="請輸入電話"
+                                value="{{ emp.phone }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address" class="col-md-4 control-label">地址: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="請輸入地址"
+                                value="{{ emp.address }}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-4 control-label">信箱: </label>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="請輸入信箱"
+                                value="{{ emp.email }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hierarchy" class="col-md-4 control-label">職位: </label>
+                        <div class="col-md-8">
+                            <select name="hierarchy">
+                                <option value="1" {% if emp.hierarchy == "1" %} selected {% endif %}> 總經理</option>
+                                <option value="2" {% if emp.hierarchy == "2" %} selected {% endif %}> 主管</option>
+                                <option value="3" {% if emp.hierarchy == "3" %} selected {% endif %}> 員工</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salary" class="col-md-4 control-label">薪水: </label>
+                        <div class="col-md-8">
+                            <input type="number" class="form-control" id="salary" name="salary" placeholder="請輸入薪水"
+                                value="{{ emp.salary }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dep" class="col-md-4 control-label">部門: </label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="dep" id="dep">
+                                {% for dep in dep_list %}
+                                {% if emp.dep_id == dep.id %}
+                                <option value="{{ dep.id }}" selected> {{ dep.dep_name }}</option>
+                                {% else %}
+                                <option value="{{ dep.id }}"> {{ dep.dep_name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="group" class="col-md-4 control-label">社團: </label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="group" id="group" multiple="true">
+                                {% for group in group_list %}
+                                {% if group in emp.group.all %}
+                                <option value="{{ group.id }}" selected> {{ group.group_name }}</option>
+                                {% else %}
+                                <option value="{{ group.id }}"> {{ group.group_name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="head_img" class="col-md-4 control-label">照片: </label>
+                        <div class="col-md-8"><label for="head_img">
+                                <img id="imgforshow" src="/media/{{ emp.head_img }}"
+                                    style="height:60px; width:60px;"></label>
+                            <input type="file" name="head_img" id="head_img" style="display:none"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attachment" class="col-md-4 control-label">附件: </label>
+                        <div class="col-md-8">
+                            <h3>{{ emp.attachment }}</h3><br>
+                            <input type="file" name="attachment" id="attachment">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" class="btn btn-primary" value="修改">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
